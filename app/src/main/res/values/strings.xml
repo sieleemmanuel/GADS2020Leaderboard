@@ -1,0 +1,20 @@
+<resources>
+    <string name="app_name">GADSLeaderboard</string>
+    <string name="tab1_leaders">Learning Leaders</string>
+    <string name="tab2_skill_iq_leaders">Skill IQ Leaders</string>
+    <string name="toolbar_title">LEADERBOARD</string>
+    <string name="btn_submit">Submit</string>
+    <string name="learner_name">Learner Name</string>
+    <string name="learning_hours_country">200 learning hours, Kenya</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="tv_hint_first_name">First Name</string>
+    <string name="tv_hint_last_name">Last Name</string>
+    <string name="tv_hint_email">Email Address</string>
+    <string name="et_hint_github_link">Project on GITHUB (link)</string>
+    <string name="tv_unsuccessful">Submission not Successful</string>
+    <string name="tv_project_submission">Project Submission</string>
+    <string name="tv_google">Google</string>
+    <string name="tv_africa">Africa</string>
+    <string name="tv_developer_scholarship">Developer Scholarship</string>
+</resources>
