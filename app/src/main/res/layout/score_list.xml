@@ -6,7 +6,8 @@
     android:layout_marginTop="15dp"
     android:layout_marginEnd="15dp"
     android:layout_marginStart="15dp"
-    app:cardBackgroundColor="@color/colorAccent">
+    app:cardBackgroundColor="@color/colorWhite">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

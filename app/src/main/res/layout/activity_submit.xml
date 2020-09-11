@@ -27,6 +27,8 @@
         app:layout_constraintEnd_toStartOf="@+id/etLastName"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
+        android:foregroundTint="@color/colorAccent"
+        android:keyboardNavigationCluster="true"
         app:layout_constraintTop_toBottomOf="@+id/hr" />
 
     <EditText
@@ -125,7 +127,7 @@
         android:layout_marginBottom="10dp"
         android:gravity="center_horizontal"
         android:text="@string/tv_project_submission"
-        android:textColor="@color/colorOrange"
+        android:textColor="@color/colorAccent"
         android:textSize="25sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"

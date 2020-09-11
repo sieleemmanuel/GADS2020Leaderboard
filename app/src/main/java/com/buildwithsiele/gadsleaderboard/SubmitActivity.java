@@ -1,35 +1,32 @@
 package com.buildwithsiele.gadsleaderboard;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-
 import android.os.Bundle;
-import android.view.LayoutInflater;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 public class SubmitActivity extends AppCompatActivity {
+    private static final String TAG = "Tag";
     private EditText etFirstName,etLastName,etEmail,etGithubLink;
     private String mFirstName;
     private String mLastName;
     private String mEmail;
     private String mGithubLink;
     private AlertDialog mDialog;
+    private AlertDialog mLoadingAlert;
 
-
-    @Override
-    public boolean onSupportNavigateUp() {
-        return super.onSupportNavigateUp();
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,41 +42,37 @@ public class SubmitActivity extends AppCompatActivity {
         assert getSupportActionBar() != null;
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-        toolbar.setNavigationOnClickListener(view -> {
 
-
-        });
-
-        btnSubmit.setOnClickListener(view -> submitDetails());
+        btnSubmit.setOnClickListener(view -> verifySubmit());
     }
 
-    private void submitDetails() {
-        verifyInputs();
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
     }
 
-    private void verifyInputs() {
+    private void verifySubmit() {
         mFirstName = etFirstName.getText().toString();
         mLastName = etLastName.getText().toString();
         mEmail = etEmail.getText().toString();
         mGithubLink = etGithubLink.getText().toString();
 
-        if (mFirstName.isEmpty()){
+        if (mFirstName.isEmpty()) {
             etFirstName.setError("Can't be empty");
             etFirstName.requestFocus();
-            if (mLastName.isEmpty()){
+        } else if (mLastName.isEmpty()) {
             etLastName.setError("Can't be empty");
             etLastName.requestFocus();
-            if (mEmail.isEmpty()){
-                etEmail.setError("Can't be empty");
-                etEmail.requestFocus();
-                if (mGithubLink.isEmpty()){
-                    etGithubLink.setError("Can't be empty");
-                    etGithubLink.requestFocus();
-                }
-            }
+        } else if (mEmail.isEmpty()) {
+            etEmail.setError("Can't be empty");
+            etEmail.requestFocus();
         }
-        }else{
-            Toast.makeText(this, ("Name: "+mFirstName+" " +mLastName +"\n"+"Email: " + mEmail +"\n"+ "Github Link: "+ mGithubLink), Toast.LENGTH_SHORT).show();
+        if (mGithubLink.isEmpty()) {
+            etGithubLink.setError("Can't be empty");
+            etGithubLink.requestFocus();
+        } else {
+            Toast.makeText(this, ("Name: " + mFirstName + " " + mLastName + "\n" + "Email: " + mEmail + "\n" + "Github Link: " + mGithubLink), Toast.LENGTH_SHORT).show();
             showConfirmDialog();
         }
 
@@ -104,19 +97,30 @@ public class SubmitActivity extends AppCompatActivity {
     }
 
     private void submitResponse() {
+        AlertDialog.Builder submitProgress = new AlertDialog.Builder(this);
+        View view = getLayoutInflater().inflate(R.layout.progressbar, null);
+        submitProgress.setCancelable(false)
+                .setView(view);
+        mLoadingAlert = submitProgress.create();
+        mLoadingAlert.show();
         ApiInterface apiService = ApiClient.sendResponse().create(ApiInterface.class);
-        Call<Void> call = apiService.sendResponse(mFirstName,mLastName,mEmail,mGithubLink);
+        Call<Void> call = apiService.sendResponse(mEmail, mLastName, mFirstName, mGithubLink);
         call.enqueue(new Callback<Void>() {
             @Override
-            public void onResponse(@NonNull Call<Void> call,@NonNull Response<Void> response) {
-                if (response.isSuccessful()){
+            public void onResponse(@NonNull Call<Void> call, @NonNull Response<Void> response) {
+                if (response.isSuccessful()) {
+                    mLoadingAlert.hide();
                     showSuccessDialog();
+//                    mDialog.hide();
+                    Toast.makeText(SubmitActivity.this, "Response: " + response.code(), Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(@NonNull Call<Void> call, @NonNull Throwable t) {
+                mLoadingAlert.hide();
                 showFailDialog();
+                Log.d(TAG, "Error: " + t.getMessage());
             }
         });
     }
@@ -137,4 +141,5 @@ public class SubmitActivity extends AppCompatActivity {
                 .setCancelable(true);
         builder.create().show();
     }
+
 }

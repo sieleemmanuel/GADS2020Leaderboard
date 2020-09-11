@@ -41,7 +41,7 @@
         android:text="Yes"
         android:textSize="25dp"
         android:textAllCaps="false"
-        android:textColor="@color/colorOrange"
+        android:textColor="@color/colorAccent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
