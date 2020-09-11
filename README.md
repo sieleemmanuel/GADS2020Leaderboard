@@ -10,4 +10,4 @@ This is GADS2020 Android Track Phase 2 Project, that displays list of learner le
 
 |<img src ='arts/04.png' width='210'/>|<img src='arts/05.png' width='210'/>|<img src='arts/06.png' width='210'/>|<img src='arts/07.png' width='210'/>|
 |:--:|:--:|:--:|:--:|
-|Submit Response  activity|Confirm submit alert|Submit  Successful alert|Failed fail alert|
+|Submit Response  activity|Confirm submit alert|Submit  Successful alert|Submission fail alert|
